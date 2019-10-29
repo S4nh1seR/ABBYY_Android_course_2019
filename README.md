@@ -1,1 +1,1 @@
-# ABBYY_Android_course_2019
+### ABBYY Android course (2019) - Рящиков Александр
