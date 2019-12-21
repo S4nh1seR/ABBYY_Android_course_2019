@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="standardMargin">16dp</dimen>
+    <dimen name="lowMargin">10dp</dimen>
+
+    <dimen name="cornerRadius">4dp</dimen>
+
+    <dimen name="firstPageImageSize">96dp</dimen>
+    <dimen name="firstPageOneNoteHeight">128dp</dimen>
+
+    <dimen name="secondPageImageWidth">203dp</dimen>
+    <dimen name="secondPageImageWidthLand">222dp</dimen>
+
+</resources>
