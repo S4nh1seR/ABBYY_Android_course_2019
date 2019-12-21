@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.setTitle("Notes");
+        this.setTitle(R.string.app_name);
 
         View card = findViewById(R.id.cardView);
 
