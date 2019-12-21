@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        app:cardCornerRadius="@dimen/cornerRadius"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standardMargin"
+        android:layout_marginEnd="@dimen/standardMargin"
+        android:layout_marginTop="@dimen/lowMargin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/firstPageOneNoteHeight">
+
+            <ImageView
+                android:id="@+id/mainImage"
+                android:layout_height="@dimen/firstPageImageSize"
+                android:layout_width="@dimen/firstPageImageSize"
+                android:layout_marginLeft="@dimen/standardMargin"
+                android:layout_marginTop="@dimen/standardMargin"
+                android:layout_marginBottom="@dimen/standardMargin"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:srcCompat="@drawable/cat1"/>
+
+            <TextView
+                android:id="@+id/mainDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/standardMargin"
+                android:layout_marginTop="@dimen/standardMargin"
+                android:text="@string/dateText"
+                app:layout_constraintStart_toEndOf="@+id/mainImage"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/mainText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/standardMargin"
+                android:layout_marginTop="@dimen/lowMargin"
+                android:layout_marginEnd="@dimen/standardMargin"
+                android:layout_marginBottom="@dimen/standardMargin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/mainImage"
+                app:layout_constraintTop_toBottomOf="@+id/mainDate"
+                android:text="@string/mainText"
+                android:ellipsize="end"
+                android:maxLines="4"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
