@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.mainListContainer, ListFragment.newInstance(), ListFragment.TAG)
+                    .replace(R.id.mainContainer, ListFragment.newInstance(), ListFragment.TAG)
                     .addToBackStack(null)
                     .commit();
         }
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.mainListContainer, DetailFragment.newInstance(id), DetailFragment.TAG)
+                .replace(R.id.mainContainer, DetailFragment.newInstance(id), DetailFragment.TAG)
                 .addToBackStack(null)
                 .commit();
     }
