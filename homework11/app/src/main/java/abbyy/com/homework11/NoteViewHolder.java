@@ -5,7 +5,6 @@ import android.view.View;
 import androidx.cardview.widget.CardView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.text.SimpleDateFormat;
 
 public class NoteViewHolder extends RecyclerView.ViewHolder {

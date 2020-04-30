@@ -22,6 +22,6 @@ public class AppSqliteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
-
     }
+
 }

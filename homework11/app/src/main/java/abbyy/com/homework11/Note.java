@@ -8,9 +8,6 @@ public class Note {
     private String text;
     private int drawableId;
 
-    public Note() {
-    }
-
     public Note(final long id, final Date date, final String text, final int drawableId) {
         this.id = id;
         this.date = date;

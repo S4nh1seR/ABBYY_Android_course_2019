@@ -17,19 +17,15 @@ public class App extends Application {
         super.onCreate();
         context = this;
         databaseHolder = new DatabaseHolder(context);
-
         noteRepository = new NoteRepository(databaseHolder);
-        noteRepository.Initialize();
     }
 
     public static Context getContext() {
         return context;
     }
-
     public static DatabaseHolder getDatabaseHolder() {
         return databaseHolder;
     }
-
     public static NoteRepository getNoteRepository() {
         return noteRepository;
     }
