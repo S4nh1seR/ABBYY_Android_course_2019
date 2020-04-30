@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Notes</string>
+
+    <string name="dateText1">2019.12.21</string>
+    <string name="dateText2">2019.12.20</string>
+    <string name="dateText3">2019.12.19</string>
+    <string name="dateText4">2019.12.18</string>
+    <string name="dateText5">2019.12.17</string>
+    <string name="dateText6">2019.12.16</string>
+    <string name="dateText7">2019.12.15</string>
+    <string name="dateText8">2019.12.14</string>
+
+    <string name="mainText">Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit, sed do eiusmod tempor
+        incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+        ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat
+        nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+        sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </string>
+</resources>
