@@ -135,25 +135,6 @@ public class CameraActivity extends AppCompatActivity implements ImageCapture.On
         }
     }
 
-    public void recognizeImage(@NonNull final File file) {
-        FirebaseVisionImage image;
-        try {
-            image = FirebaseVisionImage.fromFilePath(this, Uri.fromFile(file));
-            FirebaseVisionTextRecognizer detector = FirebaseVision.getInstance().getOnDeviceTextRecognizer();
-            detector.processImage(image)
-                .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
-                    @Override
-                    public void onSuccess(FirebaseVisionText result) {
-                        text = result.getText();
-//                        if (text.isEmpty()) {
-//                            text = getResources().getString(getResources().getIdentifier("mainText", "string", App.getContext().getPackageName()));
-//                        }
-                    }
-                });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     @Override
     public void onError(
             @NonNull final ImageCapture.ImageCaptureError imageCaptureError,
