@@ -77,12 +77,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
                                         .setMessage(R.string.delete_accept)
                                         .setPositiveButton(R.string.pos_answer, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-                                                App.getNoteRepository().deleteNote(((MainActivity)view.getContext()).getAsyncTask(), id, new NoteRepository.onDeleteNoteCallback() {
-                                                    @Override
-                                                    public void onDeleteNote() {
-                                                        ((MainActivity)view.getContext()).updateNoteList();
-                                                    }
-                                                });
+                                                ((MainActivity)view.getContext()).deleteNote(id);
                                                 Toast.makeText(view.getContext(), R.string.pos_textlog, Toast.LENGTH_SHORT).show();
                                             }
                                         })

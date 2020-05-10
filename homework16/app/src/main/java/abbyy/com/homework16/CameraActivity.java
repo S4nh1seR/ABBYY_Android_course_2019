@@ -1,6 +1,7 @@
 package abbyy.com.homework16;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,8 +16,10 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.UUID;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.view.CameraView;
@@ -104,6 +107,7 @@ public class CameraActivity extends AppCompatActivity implements ImageCapture.On
         });
     }
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     public void onImageSaved(@NonNull final File file) {
         FirebaseVisionImage image;
@@ -118,10 +122,23 @@ public class CameraActivity extends AppCompatActivity implements ImageCapture.On
                             if (text.isEmpty()) {
                                 text = getResources().getString(getResources().getIdentifier("mainText", "string", App.getContext().getPackageName()));
                             }
-                            long newId = App.getNoteRepository().insertNote(asyncTask, new Note(new Date(), text, file.getPath()));
-                            Intent intent = new Intent();
-                            intent.putExtra("noteToShow", newId + 1);
-                            setResult(RESULT_OK, intent);
+                            Note newNote = new Note(new Date(), text, file.getPath());
+                            asyncTask = new AsyncTask<Note, Void, Long>() {
+                                @WorkerThread
+                                @Override
+                                protected Long doInBackground(final Note... notes) {
+                                    return App.getNoteRepository().insertNote(notes[0]);
+                                }
+
+                                @MainThread
+                                @Override
+                                protected void onPostExecute(final Long id) {
+                                    super.onPostExecute(id);
+                                    Intent intent = new Intent();
+                                    intent.putExtra("noteToShow", id + 1);
+                                    setResult(RESULT_OK, intent);
+                                }
+                            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, newNote);
                             finish();
                         }
                     });

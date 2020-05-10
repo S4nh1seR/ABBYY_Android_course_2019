@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
 import androidx.fragment.app.Fragment;
 
 import android.os.AsyncTask;
@@ -52,9 +54,17 @@ public class DetailFragment extends Fragment {
         textView = view.findViewById(R.id.detailedPageTxt);
         final long id = getArguments().getLong(ID_KEY);
 
-        App.getNoteRepository().getNoteById(asyncTask, id, new NoteRepository.OnGetNoteByIdCallback() {
+        asyncTask = new AsyncTask<Long, Void, Note>() {
+            @WorkerThread
             @Override
-            public void onGetNote(Note note) {
+            protected Note doInBackground(final Long... id) {
+                return App.getNoteRepository().getNoteById(id[0]);
+            }
+
+            @MainThread
+            @Override
+            protected void onPostExecute(final Note note) {
+                super.onPostExecute(note);
                 textView.setText(note.getText());
                 Integer drawId = note.getDrawableId();
                 if (drawId == null) {
@@ -63,7 +73,7 @@ public class DetailFragment extends Fragment {
                     imageView.setImageDrawable(getResources().getDrawable(drawId));
                 }
             }
-        });
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, id);
     }
 
     @Override

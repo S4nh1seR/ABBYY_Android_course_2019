@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -73,12 +75,20 @@ public class ListFragment extends Fragment implements NoteAdapter.Listener {
 
     @SuppressLint( "StaticFieldLeak" )
     public void processNotes() {
-        App.getNoteRepository().getNotes(asyncTask, new NoteRepository.OnGetNotesCallback() {
+        asyncTask = new AsyncTask<Void, Void, List<Note>>() {
+            @WorkerThread
             @Override
-            public void onGetNotes(List<Note> list) {
+            protected List<Note> doInBackground(final Void... voids) {
+                return App.getNoteRepository().getNotes();
+            }
+
+            @MainThread
+            @Override
+            protected void onPostExecute(final List<Note> list) {
+                super.onPostExecute(list);
                 adapter.setNotesList(list);
             }
-        });
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override

@@ -1,12 +1,17 @@
 package abbyy.com.homework16;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
+import androidx.annotation.WorkerThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -77,10 +82,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void updateNoteList() {
-        ((ListFragment)getSupportFragmentManager().findFragmentByTag(ListFragment.TAG)).processNotes();
-    }
-
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
@@ -90,8 +91,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public AsyncTask getAsyncTask() {
-        return asyncTask;
+    @SuppressLint( "StaticFieldLeak" )
+    public void deleteNote(long id) {
+        asyncTask = new AsyncTask<Long, Void, Void>() {
+            @WorkerThread
+            @Override
+            protected Void doInBackground(final Long... ids) {
+                final NoteRepository repository = App.getNoteRepository();
+                Note note = repository.getNoteById(ids[0]);
+                repository.deleteNote(ids[0]);
+                if (note.getDrawableId() == null) {
+                    new File(note.getPath()).delete();
+                }
+                return null;
+            }
+            @MainThread
+            @Override
+            protected void onPostExecute(Void v) {
+                super.onPostExecute(v);
+                ((ListFragment)getSupportFragmentManager().findFragmentByTag(ListFragment.TAG)).processNotes();
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, id);
     }
 
     @Override
