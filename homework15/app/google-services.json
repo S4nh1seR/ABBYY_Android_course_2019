@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1031376437213",
+    "firebase_url": "https://mlkit-homework.firebaseio.com",
+    "project_id": "mlkit-homework",
+    "storage_bucket": "mlkit-homework.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031376437213:android:2b1a595749021387470034",
+        "android_client_info": {
+          "package_name": "abbyy.com.homework14"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1031376437213-3mq7ps9vdef6cc7dfs1g8qjfgd48alcl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSNw91GLzOKMTsszwOiuBKewttWT4kGNk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1031376437213-3mq7ps9vdef6cc7dfs1g8qjfgd48alcl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
