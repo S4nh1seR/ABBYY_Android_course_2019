@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/DetailedPage"
+    tools:context="abbyy.com.homework14.DetailFragment">
+    <ImageView
+        android:id="@+id/detailedPageImg"
+        android:layout_height="match_parent"
+        android:layout_width="@dimen/secondPageImageWidth"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter"
+
+        android:layout_marginTop="@dimen/standardMargin"
+        android:layout_marginBottom="@dimen/standardMargin"
+        android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/detailedPageTxt"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/standardMargin"
+        android:layout_marginRight="@dimen/standardMargin"
+        android:layout_weight="1"/>
+</LinearLayout>
