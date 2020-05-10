@@ -9,10 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.WorkerThread;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -70,26 +68,17 @@ public class ListFragment extends Fragment implements NoteAdapter.Listener {
         adapter = new NoteAdapter();
         recyclerView.setAdapter(adapter);
         adapter.setListener(this);
-
         processNotes();
     }
 
     @SuppressLint( "StaticFieldLeak" )
     public void processNotes() {
-        asyncTask = new AsyncTask<Void, Void, List<Note>>() {
-            @WorkerThread
+        App.getNoteRepository().getNotes(asyncTask, new NoteRepository.OnGetNotesCallback() {
             @Override
-            protected List<Note> doInBackground(final Void... voids) {
-                return App.getNoteRepository().getNotes();
-            }
-
-            @MainThread
-            @Override
-            protected void onPostExecute(final List<Note> list) {
-                super.onPostExecute(list);
+            public void onGetNotes(List<Note> list) {
                 adapter.setNotesList(list);
             }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        });
     }
 
     @Override
@@ -118,7 +107,7 @@ public class ListFragment extends Fragment implements NoteAdapter.Listener {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if( asyncTask != null ) {
+        if(asyncTask != null) {
             asyncTask.cancel( true );
             asyncTask = null;
         }

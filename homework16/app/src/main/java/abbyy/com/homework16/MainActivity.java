@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+    private AsyncTask asyncTask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +87,19 @@ public class MainActivity extends AppCompatActivity {
             finish();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    public AsyncTask getAsyncTask() {
+        return asyncTask;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(asyncTask != null) {
+            asyncTask.cancel( true );
+            asyncTask = null;
         }
     }
 }

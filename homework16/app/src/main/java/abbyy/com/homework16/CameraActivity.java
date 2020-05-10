@@ -34,6 +34,7 @@ public class CameraActivity extends AppCompatActivity implements ImageCapture.On
 
     private static final int CAMERA_REQUEST_CODE = 0;
 
+    private AsyncTask asyncTask;
     private CameraView cameraView;
     private View takePictureButton;
     private String text;
@@ -105,8 +106,6 @@ public class CameraActivity extends AppCompatActivity implements ImageCapture.On
 
     @Override
     public void onImageSaved(@NonNull final File file) {
-        final NoteRepository repository = App.getNoteRepository();
-        final int noteNumber = repository.getNotesNumber();
         FirebaseVisionImage image;
         try {
             image = FirebaseVisionImage.fromFilePath(this, Uri.fromFile(file));
@@ -119,11 +118,9 @@ public class CameraActivity extends AppCompatActivity implements ImageCapture.On
                             if (text.isEmpty()) {
                                 text = getResources().getString(getResources().getIdentifier("mainText", "string", App.getContext().getPackageName()));
                             }
-                            final Note newNote = new Note(noteNumber, new Date(), text, file.getPath());
-                            repository.insertNote(newNote);
-
+                            long newId = App.getNoteRepository().insertNote(asyncTask, new Note(new Date(), text, file.getPath()));
                             Intent intent = new Intent();
-                            intent.putExtra("noteToShow", noteNumber + 1);
+                            intent.putExtra("noteToShow", newId + 1);
                             setResult(RESULT_OK, intent);
                             finish();
                         }
@@ -143,5 +140,14 @@ public class CameraActivity extends AppCompatActivity implements ImageCapture.On
 
     private File generatePictureFile() {
         return new File(getFilesDir(), UUID.randomUUID().toString());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(asyncTask != null) {
+            asyncTask.cancel( true );
+            asyncTask = null;
+        }
     }
 }

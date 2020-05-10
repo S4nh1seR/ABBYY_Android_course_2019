@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.WorkerThread;
 import androidx.fragment.app.Fragment;
 
 import android.os.AsyncTask;
@@ -54,36 +52,24 @@ public class DetailFragment extends Fragment {
         textView = view.findViewById(R.id.detailedPageTxt);
         final long id = getArguments().getLong(ID_KEY);
 
-        asyncTask = new AsyncTask<Long, Void, Note>() {
-            @WorkerThread
+        App.getNoteRepository().getNoteById(asyncTask, id, new NoteRepository.OnGetNoteByIdCallback() {
             @Override
-            protected Note doInBackground(final Long... id) {
-                return App.getNoteRepository().getNoteWithId(id[0]);
-            }
-
-            @MainThread
-            @Override
-            protected void onPostExecute(final Note note) {
-                super.onPostExecute(note);
+            public void onGetNote(Note note) {
                 textView.setText(note.getText());
                 Integer drawId = note.getDrawableId();
                 if (drawId == null) {
-                    Picasso.get()
-                            .load(new File(note.getPath()))
-                            .fit()
-                            .centerInside()
-                            .into(imageView);
+                    Picasso.get().load(new File(note.getPath())).fit().centerInside().into(imageView);
                 } else {
                     imageView.setImageDrawable(getResources().getDrawable(drawId));
                 }
             }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, id);
+        });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if( asyncTask != null ) {
+        if(asyncTask != null) {
             asyncTask.cancel( true );
             asyncTask = null;
         }

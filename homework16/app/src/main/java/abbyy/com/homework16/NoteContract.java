@@ -65,18 +65,12 @@ public class NoteContract {
         }
     }
 
-    public static void insertNote(@NonNull final SQLiteDatabase db, @NonNull final Note note) {
+    // id переданной заметки может быть любым
+    public static long insertNote(@NonNull final SQLiteDatabase db, @NonNull final Note note) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(NoteContract.Columns.DATE, note.getDate().getTime());
         contentValues.put(NoteContract.Columns.TEXT, note.getText());
         contentValues.put(NoteContract.Columns.DRAW_ID, note.getPath());
-        db.insert(NoteContract.TABLE_NAME, null, contentValues);
-    }
-
-    public static void deleteNote(@NonNull final SQLiteDatabase db, @NonNull final Note note) {
-        db.delete(NoteContract.TABLE_NAME, "_ID == ?", new String[]{ String.valueOf(note.getId())});
-        if (note.getDrawableId() == null) {
-            new File(note.getPath()).delete();
-        }
+        return db.insert(NoteContract.TABLE_NAME, null, contentValues);
     }
 }

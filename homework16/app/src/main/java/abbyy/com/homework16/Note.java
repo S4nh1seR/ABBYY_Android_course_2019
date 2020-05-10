@@ -8,8 +8,17 @@ public class Note {
     private String text;
     private String drawableId;
 
+    private static long undefined = -1;
+
     public Note(final long id, final Date date, final String text, final String drawableId) {
         this.id = id;
+        this.date = date;
+        this.text = text;
+        this.drawableId = drawableId;
+    }
+
+    public Note(final Date date, final String text, final String drawableId) {
+        this.id = undefined;
         this.date = date;
         this.text = text;
         this.drawableId = drawableId;
