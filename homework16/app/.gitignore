@@ -1,5 +1,7 @@
 /build
 /release
+/.idea
 release.jks
 release.properties
 google-services.json
+/DS_Store
